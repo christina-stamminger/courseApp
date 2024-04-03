@@ -24,21 +24,26 @@ public class CreateUserController {
     @Autowired
     private UserRepository userRepository;
 
-
     @PostMapping
     public ResponseEntity<UserResponseBody> create(@RequestBody CreateUserDTO createUserDTO) throws EmptyUserException {
-
         if (createUserDTO == null) {
             UserResponseBody response = new UserResponseBody();
             response.addErrorMessage("Post body is empty.");
-
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        List<User> users = this.userRepository.findByLastName(createUserDTO.getLastName());
+        Optional<User> userOptional = userRepository.findById(createUserDTO.getId());
+        if (userOptional.isPresent()) {
+            User existingUser = userOptional.get();
+            UserResponseBody response = new UserResponseBody();
+            response.addErrorMessage("User with ID " + existingUser.getId() + " already exists.");
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        }
 
+        // User does not exist, proceed with creation
         User user = this.userService.create(createUserDTO.getId(), createUserDTO.getUserName(), createUserDTO.getPassword(), createUserDTO.getFirstName(), createUserDTO.getLastName(), createUserDTO.getEmail());
 
         return new ResponseEntity<>(new UserResponseBody(user), HttpStatus.OK);
     }
 }
+

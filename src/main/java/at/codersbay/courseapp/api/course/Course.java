@@ -1,6 +1,7 @@
 package at.codersbay.courseapp.api.course;
 
 import at.codersbay.courseapp.api.booking.Booking;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -24,14 +25,11 @@ public class Course {
     )
     private long id;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @Column
     private Set<Booking> bookings = new HashSet<>();
 
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-    }
 
     public Set<Booking> getBookings() {
         return bookings;
@@ -50,9 +48,30 @@ public class Course {
     @Column
     private int maxUsers;
 
+    public Course(){
+
+   }
+
+    public Course(Set<Booking> bookings, String title, String description, int maxUsers) {
+        this.bookings = bookings;
+        this.title = title;
+        this.description = description;
+        this.maxUsers = maxUsers;
+    }
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
+
 
     public void setTitle(String title) {
         this.title = title;
@@ -66,9 +85,10 @@ public class Course {
         this.description = description;
     }
 
-    public long getMaxUsers() {
+    public int getMaxUsers() {
         return maxUsers;
     }
+
 
     public void setMaxUsers(int maxUsers) {
         this.maxUsers = maxUsers;

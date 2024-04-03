@@ -33,9 +33,9 @@ public class GetUserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<User> getById(@PathVariable long userId) {
-        Optional<User> optionalUser = this.userRepository.findById(userId);
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getById(@PathVariable long id) {
+        Optional<User> optionalUser = this.userRepository.findById(id);
 
         if(!optionalUser.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

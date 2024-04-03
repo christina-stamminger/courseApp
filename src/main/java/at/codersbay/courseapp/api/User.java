@@ -1,11 +1,13 @@
 package at.codersbay.courseapp.api;
+import at.codersbay.courseapp.api.course.Course;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import at.codersbay.courseapp.api.booking.Booking;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,7 +27,9 @@ public class User {
     )
     private long id;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Column
     private Set<Booking> bookings = new HashSet<>();
 
     public Set<Booking> getBookings() {
@@ -35,9 +39,9 @@ public class User {
     public void setBookings(Set<Booking> bookings) {
         this.bookings = bookings;
     }
-//private Set<User> users = new HashSet<>();
+    //private Set<User> users = new HashSet<>();
 
-    @Column
+    @Column(unique = true)
     private String userName;
 
     @Column
@@ -50,6 +54,7 @@ public class User {
     private String lastName;
 
     @Column
+    @Email(message = "Invalid email address")
     private String email;
 
 
@@ -57,7 +62,7 @@ public class User {
     public User() {
 
     }
-/*
+
     //constructor
     public User(String userName, String password, String firstName, String lastName, String email) {
         this.userName = userName;
@@ -66,7 +71,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
     }
-*/
+
 
     public long getId() {
         return id;

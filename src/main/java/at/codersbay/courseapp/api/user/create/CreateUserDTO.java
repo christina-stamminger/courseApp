@@ -1,7 +1,10 @@
 package at.codersbay.courseapp.api.user.create;
 
 import at.codersbay.courseapp.api.User;
+import at.codersbay.courseapp.api.booking.Booking;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class CreateUserDTO {
@@ -12,7 +15,6 @@ public class CreateUserDTO {
     private String firstName;
     private String lastName;
     private String email;
-
 
 
     public long getId() {

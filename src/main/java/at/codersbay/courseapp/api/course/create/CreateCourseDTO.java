@@ -4,6 +4,7 @@ public class CreateCourseDTO {
 
     private long id;
     private String title;
+
     private String description;
     private int maxUsers;
 
@@ -22,7 +23,7 @@ public class CreateCourseDTO {
     public void setTitle(String title) {
         this.title = title;
     }
-
+    
     public String getDescription() {
         return description;
     }

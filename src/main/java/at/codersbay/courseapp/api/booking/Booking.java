@@ -6,6 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
+
 @Entity
 @Table(name="TB_BOOKING")
 public class Booking {
@@ -27,17 +29,20 @@ public class Booking {
     @JoinColumn(name = "user_id")
     private User user;
 
+
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
+
     private LocalDateTime bookedOn;
+
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void id(long id) {
         this.id = id;
     }
 
@@ -49,13 +54,12 @@ public class Booking {
         this.user = user;
     }
 
-    public Course getCourse() {
-        return course;
-    }
-
+    public Course getCourse() {return course;}
     public void setCourse(Course course) {
         this.course = course;
     }
+
+
 
     public LocalDateTime getBookedOn() {
         return bookedOn;
@@ -64,4 +68,7 @@ public class Booking {
     public void setBookedOn(LocalDateTime bookedOn) {
         this.bookedOn = bookedOn;
     }
+
+
+
 }
