@@ -27,17 +27,11 @@ public class Course {
 
     @JsonIgnore
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+
+
     @Column
     private Set<Booking> bookings = new HashSet<>();
 
-
-    public Set<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
-    }
 
     @Column
     private String title;
@@ -59,6 +53,13 @@ public class Course {
         this.maxUsers = maxUsers;
     }
 
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
+    }
 
     public long getId() {
         return id;
@@ -88,7 +89,6 @@ public class Course {
     public int getMaxUsers() {
         return maxUsers;
     }
-
 
     public void setMaxUsers(int maxUsers) {
         this.maxUsers = maxUsers;

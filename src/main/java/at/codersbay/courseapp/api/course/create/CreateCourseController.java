@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/course")
@@ -25,20 +26,34 @@ public class CreateCourseController {
     @Autowired
     private CourseRepository courseRepository;
 
-    @PostMapping
-    public ResponseEntity<CourseResponseBody> create(@RequestBody CreateCourseDTO createCourseDTO) throws EmptyCourseException {
+    @PostMapping("/create") // Specify the endpoint path for creating a new course
+    public ResponseEntity<CourseResponseBody> create(@RequestBody CreateCourseDTO createCourseDTO) {
+        try {
+            if (createCourseDTO == null) {
+                CourseResponseBody response = new CourseResponseBody();
+                response.addErrorMessage("Post body is empty.");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
 
-        if (createCourseDTO == null) {
+            // Check if a course with the provided ID already exists
+            Optional<Course> courseOptional = courseRepository.findById(createCourseDTO.getId());
+            if (courseOptional.isPresent()) {
+                CourseResponseBody response = new CourseResponseBody();
+                response.addErrorMessage("Course with ID " + createCourseDTO.getId() + " already exists.");
+                return new ResponseEntity<>(response, HttpStatus.CONFLICT); // Return conflict status
+            }
+
+            // Create a new course using the provided DTO data
+            Course newCourse = courseService.create(createCourseDTO.getTitle(), createCourseDTO.getDescription(), createCourseDTO.getMaxUsers());
+
+            // Return the newly created course in the response body
+            return new ResponseEntity<>(new CourseResponseBody(newCourse), HttpStatus.CREATED);
+        } catch (EmptyCourseException e) {
+            // Handle empty course exception
             CourseResponseBody response = new CourseResponseBody();
-            response.addErrorMessage("Post body is empty.");
-
+            response.addErrorMessage("Course creation failed: " + e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-
-        List<Course> courses = this.courseRepository.findByTitle(createCourseDTO.getTitle());
-
-        Course course = this.courseService.create(createCourseDTO.getId(), createCourseDTO.getTitle(), createCourseDTO.getDescription(), createCourseDTO.getMaxUsers());
-
-        return new ResponseEntity<>(new CourseResponseBody(course), HttpStatus.OK);
     }
 }
+

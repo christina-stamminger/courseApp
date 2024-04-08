@@ -20,6 +20,7 @@ public class BookingService {
     @Transactional
     public Booking createBooking(User user, Course course) {
         try {
+
             Booking booking = new Booking();
             booking.setUser(user);
             booking.setCourse(course);

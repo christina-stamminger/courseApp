@@ -8,6 +8,7 @@ import at.codersbay.courseapp.api.course.CourseRepository;
 import at.codersbay.courseapp.api.user.create.CreateUserService;
 import at.codersbay.courseapp.api.user.create.EmptyUserException;
 import at.codersbay.courseapp.api.user.create.UserNotFoundException;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,14 +22,14 @@ import java.util.Optional;
     private CourseRepository courseRepository;
 
 
-        public Course create(long id, String title, String description, Integer maxUsers)
+        public Course create(String title, String description, int maxUsers)
                 throws EmptyCourseException {
 
             if (StringUtils.isEmpty(title)) {
                 throw new EmptyCourseException("Title cannot be empty.");
             } if (StringUtils.isEmpty(description)) {
                 throw new EmptyCourseException("Description cannot be empty.");
-            } else if (maxUsers == null) {
+            } else if (ObjectUtils.isEmpty(maxUsers)) {
                 throw new EmptyCourseException("Maximum of users cannot be empty.");
             }
 

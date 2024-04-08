@@ -6,17 +6,21 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.DocFlavor;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 public class CreateUserService {
+
+    // Regular expression for basic email validation
+    private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
 
     @Autowired
     private UserRepository userRepository;
 
     public User create(long id, String userName, String password, String firstName, String lastName, String email)
-            throws EmptyUserException {
+            throws EmptyUserException, InvalidEmailException {
 
         if (StringUtils.isEmpty(userName)) {
             throw new EmptyUserException("User name cannot be empty.");
@@ -26,6 +30,10 @@ public class CreateUserService {
             throw new EmptyUserException("First name cannot be empty.");
         } else if (StringUtils.isEmpty(lastName)) {
             throw new EmptyUserException("Last name cannot be empty.");
+        } else if (StringUtils.isEmpty(email)) {
+            throw new EmptyUserException("Email cannot be empty.");
+        } else if (!EMAIL_PATTERN.matcher(email).matches()) {
+            throw new InvalidEmailException("Invalid email format.");
         }
 
         User user = new User();
@@ -34,6 +42,7 @@ public class CreateUserService {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
+        //user.setBookings(bookings);
 
         return this.userRepository.save(user);
     }

@@ -9,9 +9,11 @@ import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-        //<Course> findById(Long courseId);
     Optional<Booking> findById(Long id);
 
-    //Optional<User> findById(long id);
+    boolean existsByUserIdAndCourseId(long userId, long courseId);
+    //List<Course> findById(long id);
+
+    List<Booking> findAllByCourseId(long id);
 }
 

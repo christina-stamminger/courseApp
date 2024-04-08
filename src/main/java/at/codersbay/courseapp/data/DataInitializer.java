@@ -89,14 +89,14 @@ public class DataInitializer {
             Course pilatesAdvanced = new Course();
             pilatesAdvanced.setTitle("Pilates for advanced ones");
             pilatesAdvanced.setDescription("Strong workout in pilates.");
-            pilatesAdvanced.setMaxUsers(8);
+            pilatesAdvanced.setMaxUsers(4);
 
             courseRepository.save(pilatesAdvanced);
 
             Course yogaBeginners = new Course();
             yogaBeginners.setTitle("Yoga for beginners");
             yogaBeginners.setDescription("Smooth start for absolute beginners.");
-            yogaBeginners.setMaxUsers(8);
+            yogaBeginners.setMaxUsers(3);
 
             courseRepository.save(yogaBeginners);
 

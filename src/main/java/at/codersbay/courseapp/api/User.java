@@ -7,7 +7,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,17 +32,10 @@ public class User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+
+
     @Column
     private Set<Booking> bookings = new HashSet<>();
-
-    public Set<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
-    }
-    //private Set<User> users = new HashSet<>();
 
     @Column(unique = true)
     private String userName;
@@ -53,8 +49,9 @@ public class User {
     @Column
     private String lastName;
 
-    @Column
-    @Email(message = "Invalid email address")
+    @Column(unique = true)
+    @Email(message = "Email is not valid", regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
+    @NotEmpty(message = "Email cannot be empty")
     private String email;
 
 
@@ -119,6 +116,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
     }
 
 }

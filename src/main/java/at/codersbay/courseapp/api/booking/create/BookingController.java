@@ -6,13 +6,17 @@ import at.codersbay.courseapp.api.UserResponseBody;
 import at.codersbay.courseapp.api.booking.Booking;
 import at.codersbay.courseapp.api.booking.BookingRepository;
 import at.codersbay.courseapp.api.booking.BookingResponseBody;
+import at.codersbay.courseapp.api.booking.create.EmptyBookingException;
 import at.codersbay.courseapp.api.course.Course;
 import at.codersbay.courseapp.api.course.CourseRepository;
+import at.codersbay.courseapp.api.course.create.EmptyCourseException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -34,26 +38,43 @@ public class BookingController {
     @Autowired
     private CourseRepository courseRepository;
 
-
     @PostMapping
-    public ResponseEntity<Booking> book(@RequestBody BookingDTO bookingDTO) {
+    public ResponseEntity<?> book(@RequestBody BookingDTO bookingDTO) {
         try {
             // Extract necessary data from the bookingDTO
             User user = bookingDTO.getUser();
             Course course = bookingDTO.getCourse();
 
+            // Check if the user has already booked this course
+            boolean userAlreadyBooked = bookingRepository.existsByUserIdAndCourseId(user.getId(), course.getId());
+            if (userAlreadyBooked) {
+                // User has already booked this course
+                BookingResponseBody response = new BookingResponseBody();
+                response.addErrorMessage("User has already booked this course.");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
+
+            // Retrieve the bookings for the specific course
+            List<Booking> bookingsForCourse = bookingRepository.findAllByCourseId(course.getId());
+
+            // Check if the course has reached its maximum users
+            if (bookingsForCourse.size() >= courseRepository.findById(course.getId()).get().getMaxUsers()) {
+                // if (bookingsForCourse.size() >= course.getMaxUsers()) {
+
+                // Course is fully booked
+                BookingResponseBody response = new BookingResponseBody();
+                response.addErrorMessage("Course is fully booked. Cannot make a booking.");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
+
             // Check if the booking already exists
             Optional<Booking> optionalBooking = bookingRepository.findById(bookingDTO.getId());
             if (optionalBooking.isPresent()) {
-
                 // Booking with the provided ID already exists
                 BookingResponseBody response = new BookingResponseBody();
                 response.addErrorMessage("Booking with ID " + bookingDTO.getId() + " already exists.");
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
-
-            // Validate maxUsers here??
-
 
             // Delegate the creation of the booking to the service layer
             Booking booking = bookingService.createBooking(user, course);
@@ -61,9 +82,8 @@ public class BookingController {
             // Return the created booking in the response
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
         } catch (Exception e) {
-            // Handle any exceptions/ validation errors
+            // Handle any exceptions/validation errors
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

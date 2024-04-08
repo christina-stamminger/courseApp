@@ -25,7 +25,7 @@ public class CreateUserController {
     private UserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity<UserResponseBody> create(@RequestBody CreateUserDTO createUserDTO) throws EmptyUserException {
+    public ResponseEntity<UserResponseBody> create(@RequestBody CreateUserDTO createUserDTO) throws EmptyUserException, InvalidEmailException {
         if (createUserDTO == null) {
             UserResponseBody response = new UserResponseBody();
             response.addErrorMessage("Post body is empty.");

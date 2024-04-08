@@ -25,16 +25,15 @@ public class DeleteUserController {
             @PathVariable
             long id) {
 
-        userRepository.deleteById(id);
-
         Optional<User> optionalUser = userRepository.findById(id);
 
         ResponseBody responseBody = new ResponseBody();
 
-        if(optionalUser.isPresent()) {
+        if(optionalUser.isEmpty()) {
             responseBody.addErrorMessage("Could not delete user by Id: " + id + "!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         } else {
+            userRepository.deleteById(id);
             responseBody.addMessage("Deleted user by id " + id + " successfully!");
             return new ResponseEntity<>(responseBody, HttpStatus.ACCEPTED);
         }
