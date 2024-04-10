@@ -24,6 +24,15 @@ public class CreateUserController {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Creates a new User based on the provided CreateUserDTO.
+     *
+     * @param createUserDTO DTO with details for creating User
+     * @throws EmptyUserException if createUserDTO is empty or null
+     * @throws InvalidEmailException if the email provided in createUserDTO is invalid
+     * @throws UserNameExistsException if the username provided in createUserDTO already exists
+     */
+
     @PostMapping
     public ResponseEntity<UserResponseBody> create(@RequestBody CreateUserDTO createUserDTO) throws EmptyUserException, InvalidEmailException, UserNameExistsException {
         if (createUserDTO == null) {

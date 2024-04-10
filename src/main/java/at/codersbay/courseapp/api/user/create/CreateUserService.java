@@ -59,21 +59,6 @@ public class CreateUserService {
         Optional<User> existingUser = userRepository.findByUserName(userName);
         return existingUser.isPresent();
     }
-
-    /*
-    public User getUserById(long id) throws UserNotFoundException {
-        if (id <= 0) { // Checking if userId is not null and is a valid ID
-            throw new IllegalArgumentException("User ID must be greater than zero.");
-        }
-
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        } else {
-            throw new UserNotFoundException("User by id not found!");
-        }
-    }
-     */
 }
 
 

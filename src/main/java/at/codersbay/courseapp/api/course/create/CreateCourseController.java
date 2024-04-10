@@ -26,6 +26,16 @@ public class CreateCourseController {
     @Autowired
     private CourseRepository courseRepository;
 
+    /**
+     * Creates a new course based on the data provided in the {@link CreateCourseDTO}.
+     *
+     * @param createCourseDTO An object containing the data needed to create the course.
+     * @return A {@link ResponseEntity} containing the newly created course in the response body,
+     * along with an appropriate HTTP status. If the provided DTO is {@code null}, returns
+     * {@link HttpStatus#BAD_REQUEST}. If a course with the same ID already exists, returns
+     * {@link HttpStatus#CONFLICT}. If the course creation is successful, returns
+     * {@link HttpStatus#CREATED}.
+     */
     @PostMapping("/create") // Specify the endpoint path for creating a new course
     public ResponseEntity<CourseResponseBody> create(@RequestBody CreateCourseDTO createCourseDTO) {
         try {
@@ -56,4 +66,3 @@ public class CreateCourseController {
         }
     }
 }
-

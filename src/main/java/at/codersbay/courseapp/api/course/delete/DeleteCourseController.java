@@ -22,6 +22,15 @@ import java.util.Optional;
         @Autowired
         private CourseRepository courseRepository;
 
+        /**
+         * Deletes a course by id.
+         *
+         * @param id The unique identifier of the course to delete.
+         * @return A {@link ResponseEntity} containing a response body with a message indicating the success or failure
+         * of the deletion operation, along with an appropriate HTTP status. If the course is successfully deleted,
+         * returns {@link HttpStatus#ACCEPTED}. If the course with the specified ID does not exist or could not be deleted,
+         * returns {@link HttpStatus#BAD_REQUEST}.
+         */
         @DeleteMapping("/{id}")
         public ResponseEntity<ResponseBody> delete(
                 @PathVariable

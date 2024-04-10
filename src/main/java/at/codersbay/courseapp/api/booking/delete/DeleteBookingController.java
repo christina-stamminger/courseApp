@@ -30,7 +30,15 @@ public class DeleteBookingController {
     @Autowired
     private CourseRepository courseRepository;
 
-    // Maps HTTP DELETE and expects a path variable named "id"
+    /**
+     * Deletes a booking by id.
+     *
+     * @param id The unique identifier of the booking to delete.
+     * @return A {@link ResponseEntity} containing a response body with a message indicating the success or failure
+     * of the deletion operation, along with an appropriate HTTP status. If the booking is successfully deleted,
+     * returns {@link HttpStatus#ACCEPTED}. If the booking with the specified ID does not exist or could not be deleted,
+     * returns {@link HttpStatus#BAD_REQUEST}.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseBody> delete(
             // id parameter should be bound to the value of the "id" path variable

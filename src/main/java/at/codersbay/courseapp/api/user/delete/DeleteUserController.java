@@ -20,19 +20,27 @@ public class DeleteUserController {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Deletes a user by id.
+     *
+     * @param id the ID of the user to delete.
+     * @return a ResponseEntity with a ResponseBody indicating the result of the deletion operation.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseBody> delete(
             @PathVariable
             long id) {
-
+        // Find the user by id from repository
         Optional<User> optionalUser = userRepository.findById(id);
 
+        // Create a response body object
         ResponseBody responseBody = new ResponseBody();
-
+        // If no user found by id, add error message
         if(optionalUser.isEmpty()) {
             responseBody.addErrorMessage("Could not delete user by Id: " + id + "!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         } else {
+            // If user found by id, delete user and send message
             userRepository.deleteById(id);
             responseBody.addMessage("Deleted user by id " + id + " successfully!");
             return new ResponseEntity<>(responseBody, HttpStatus.ACCEPTED);

@@ -13,6 +13,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// Entity and Table annotations
+// Entity represents a table
+// Table to specify details
 @Entity
 @Table(name="TB_USERS")
 public class User {
@@ -30,10 +33,10 @@ public class User {
     )
     private long id;
 
-    // annotation comes from the Jackson library and is used to instruct Jackson to ignore the annotated field during serialization and deserialization processes.
+    // Annotation comes from the Jackson library and is used to instruct Jackson to ignore the annotated field during serialization and deserialization processes
     @JsonIgnore
-    // mappedBy attribute specifies the field in the Booking entity that owns the relationship
-    // any changes made to the User entity are cascaded to associated Booking entities
+    // MappedBy attribute specifies the field in the Booking entity that owns the relationship
+    // Any changes made to the User entity are cascaded to associated Booking entities
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 
 
@@ -72,7 +75,7 @@ public class User {
         this.email = email;
     }
 
-
+    // Getter and Setter
     public long getId() {
         return id;
     }

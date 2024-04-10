@@ -23,6 +23,16 @@ public class UpdateCourseController {
     @Autowired
     CourseRepository courseRepository;
 
+    /**
+     * Updates a course by id based on the provided data in the {@link UpdateCourseDTO}.
+     *
+     * @param updateCourseDTO An object containing the updated course data.
+     * @return A {@link ResponseEntity} containing the updated course information in the response body,
+     * along with an HTTP status indicating the success or failure of the operation.
+     * If the provided {@code updateCourseDTO} is {@code null}, returns a {@link ResponseEntity} with
+     * {@link HttpStatus#BAD_REQUEST}. If the course is not found based on the provided ID, returns a
+     * {@link ResponseEntity} with {@link HttpStatus#BAD_REQUEST}.
+     */
     @PutMapping
     public ResponseEntity<CourseResponseBody> update(
 

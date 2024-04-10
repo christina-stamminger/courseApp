@@ -4,6 +4,7 @@ import at.codersbay.courseapp.api.booking.Booking;
 
 import java.util.Set;
 
+// DTO design pattern used for data transfer
 public class UpdateUserDTO {
     private long id;
     private String userName;
@@ -15,6 +16,7 @@ public class UpdateUserDTO {
     private Set<Booking> bookings;
 
 
+    // Getter and setter
     public long getId() {
         return id;
     }

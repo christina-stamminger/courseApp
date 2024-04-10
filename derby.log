@@ -1,10 +1,10 @@
 ----------------------------------------------------------------
-Tue Apr 09 10:48:39 CEST 2024:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-018e-c20b-83f8-0000010503a8 
-on database directory C:\Users\User\IdeaProjects\codersbay_courseApp\local with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
-Loaded from file:/C:/Users/User/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
-java.vendor=Eclipse Adoptium
-java.runtime.version=21.0.1+12-LTS
+Wed Apr 10 09:53:38 UTC 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): instance a816c00e-018e-c76d-5fad-0000073688c8 
+on database directory C:\Users\User\IdeaProjects\codersbay_courseApp\local with class loader com.intellij.database.remote.jdbc.impl.JdbcClassLoader$JdbcClassLoaderImpl@2d209079 
+Loaded from file:/C:/Users/User/AppData/Roaming/JetBrains/IntelliJIdea2023.3/jdbc-drivers/Apache%20Derby/10.16.1.1/org/apache/derby/derby/10.16.1.1/derby-10.16.1.1.jar
+java.vendor=JetBrains s.r.o.
+java.runtime.version=17.0.10+1-b1087.17
 user.dir=C:\Users\User\IdeaProjects\codersbay_courseApp
 os.name=Windows 11
 os.arch=amd64

@@ -23,6 +23,13 @@ public class GetBookingController {
     @Autowired
     private BookingRepository bookingRepository;
 
+    /**
+     * Retrieves all bookings stored in the database.
+     *
+     * @return A {@link ResponseEntity} containing a list of bookings with an appropriate HTTP status.
+     * If no bookings are found, returns {@link HttpStatus#NO_CONTENT}. If bookings are found,
+     * returns a {@link ResponseEntity} with the list of bookings and {@link HttpStatus#OK}.
+     */
     @GetMapping("/")
     public ResponseEntity<List<Booking>> getAll() {
 
@@ -35,6 +42,13 @@ public class GetBookingController {
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
+    /**
+     * Retrieves a booking by id.
+     *
+     * @param id The unique identifier of the booking to retrieve.
+     * @return A {@link ResponseEntity} containing the booking if found, or {@link HttpStatus#NO_CONTENT}
+     * if not found.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Booking> getById(
             @PathVariable

@@ -29,14 +29,14 @@ public class Booking {
     private long id;
 
     @ManyToOne
-    // Defines a many-to-one relationship with the User entity
+    // Many-to-one relationship (many bookings associated with one user)
     @JoinColumn(name = "user_id", nullable = false)
     // User associated with booking
     private User user;
 
 
     @ManyToOne
-    // Defines a many-to-one relationship with the Course entity
+    // Many-to-one relationship (many booking associated with one course)
     @JoinColumn(name = "course_id", nullable = false)
     // Course associated with booking
     private Course course;
