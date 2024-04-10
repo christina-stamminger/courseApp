@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class BookingService {
@@ -20,11 +21,19 @@ public class BookingService {
     @Transactional
     public Booking createBooking(User user, Course course) {
         try {
+            // Check if user and course are not null
+            if (user == null) {
+                throw new IllegalArgumentException("User cannot be empty");
+            }
+            if (course == null) {
+                throw new IllegalArgumentException("Course cannot be empty");
+            }
 
             Booking booking = new Booking();
             booking.setUser(user);
             booking.setCourse(course);
-            booking.setBookedOn(LocalDateTime.now());
+            LocalDateTime bookedOn = LocalDateTime.now();
+            booking.setBookedOn(bookedOn); // Set LocalDateTime directly
 
             // Save the booking to the database
             return bookingRepository.save(booking);
@@ -33,4 +42,5 @@ public class BookingService {
             throw new RuntimeException("Failed to create booking");
         }
     }
+
 }

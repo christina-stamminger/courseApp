@@ -21,7 +21,7 @@ public class GetCourseController {
     @Autowired
     private CourseRepository courseRepository;
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<List<Course>> getAll() {
 
         List<Course> courses = courseRepository.findAll();
@@ -47,4 +47,7 @@ public class GetCourseController {
 
         return ResponseEntity.ok(course);
     }
+
+
+
 }

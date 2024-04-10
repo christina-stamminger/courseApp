@@ -30,7 +30,10 @@ public class User {
     )
     private long id;
 
+    // annotation comes from the Jackson library and is used to instruct Jackson to ignore the annotated field during serialization and deserialization processes.
     @JsonIgnore
+    // mappedBy attribute specifies the field in the Booking entity that owns the relationship
+    // any changes made to the User entity are cascaded to associated Booking entities
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 
 
@@ -55,12 +58,12 @@ public class User {
     private String email;
 
 
-    //empty constructor
+    // Default constructor, required by JPA
     public User() {
 
     }
 
-    //constructor
+    // Parametrized constructor
     public User(String userName, String password, String firstName, String lastName, String email) {
         this.userName = userName;
         this.password = password;

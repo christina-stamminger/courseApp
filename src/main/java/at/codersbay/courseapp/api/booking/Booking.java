@@ -2,6 +2,7 @@ package at.codersbay.courseapp.api.booking;
 
 import at.codersbay.courseapp.api.User;
 import at.codersbay.courseapp.api.course.Course;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,7 +10,8 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Table(name="TB_BOOKING")
+// Table name for entity in db
+@Table(name = "TB_BOOKING")
 public class Booking {
 
     @Id
@@ -23,26 +25,32 @@ public class Booking {
                     @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
             }
     )
+    // Unique identifier for booking
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    // Defines a many-to-one relationship with the User entity
+    @JoinColumn(name = "user_id", nullable = false)
+    // User associated with booking
     private User user;
 
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
+    // Defines a many-to-one relationship with the Course entity
+    @JoinColumn(name = "course_id", nullable = false)
+    // Course associated with booking
     private Course course;
 
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime bookedOn;
 
-
+    // Getter and Setter
     public long getId() {
         return id;
     }
 
-    public void id(long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -54,11 +62,13 @@ public class Booking {
         this.user = user;
     }
 
-    public Course getCourse() {return course;}
+    public Course getCourse() {
+        return course;
+    }
+
     public void setCourse(Course course) {
         this.course = course;
     }
-
 
 
     public LocalDateTime getBookedOn() {
@@ -70,5 +80,6 @@ public class Booking {
     }
 
 
-
+    public void setFormattedBookedOn(String formattedDateTime) {
+    }
 }

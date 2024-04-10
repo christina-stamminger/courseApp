@@ -30,33 +30,23 @@ public class DeleteBookingController {
     @Autowired
     private CourseRepository courseRepository;
 
-
+    // Maps HTTP DELETE and expects a path variable named "id"
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseBody> delete(
+            // id parameter should be bound to the value of the "id" path variable
             @PathVariable
             long id) {
 
+        // Trying to find booking by id
         Optional<Booking> optionalBooking = bookingRepository.findById(id);
 
         ResponseBody responseBody = new ResponseBody();
 
+        // Checks if booking by given id exists
         if (optionalBooking.isPresent()) {
             Booking booking = optionalBooking.get();
             // Delete the booking
-            bookingRepository.deleteById(id);
-
-            // Delete bookings associated with user and course
-            //userRepository.deleteById(booking.getId());
-            //courseRepository.deleteById(booking.getId());
-
-            //responseBody.addMessage("Deleted booking by id " + id + " successfully!");
-
-            //... whole user and course entity is then deleted...
-            //User user = booking.getUser();
-            //Course course = booking.getCourse();
-
-            //userRepository.delete(user);
-            //courseRepository.delete(course);
+            bookingRepository.deleteById(booking.getId());
 
             responseBody.addMessage("Deleted booking by id " + id + " successfully!");
             return new ResponseEntity<>(responseBody, HttpStatus.ACCEPTED);
