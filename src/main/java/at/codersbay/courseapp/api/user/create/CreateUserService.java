@@ -23,7 +23,7 @@ public class CreateUserService {
     private UserRepository userRepository;
 
     public User create(long id, String userName, String password, String firstName, String lastName, String email)
-            throws EmptyUserException, InvalidEmailException, UserNameExistsException {
+            throws EmptyUserException, InvalidEmailException, EmailExistsException, UserNameExistsException {
 
         if (StringUtils.isEmpty(userName)) {
             throw new EmptyUserException("User name cannot be empty.");
@@ -41,6 +41,8 @@ public class CreateUserService {
             throw new EmptyUserException("Email cannot be empty.");
         } else if (!EMAIL_PATTERN.matcher(email).matches()) {
             throw new InvalidEmailException("Invalid email format.");
+        } else if (emailExists(email)) {
+            throw new EmailExistsException("Email already exists.");
         } else if (userNameExists(userName)) {
             throw new UserNameExistsException("Username already exists.");
         }
@@ -54,11 +56,17 @@ public class CreateUserService {
 
         return this.userRepository.save(user);
     }
-
+    // Method for checking if username already exists
     private boolean userNameExists(String userName) {
         Optional<User> existingUser = userRepository.findByUserName(userName);
         return existingUser.isPresent();
     }
+    // Method for checking if email already exists
+    public boolean emailExists(String email) {
+        Optional<User> existingUser = userRepository.findByEmail(email);
+        return existingUser.isPresent();
+    }
+
 }
 
 

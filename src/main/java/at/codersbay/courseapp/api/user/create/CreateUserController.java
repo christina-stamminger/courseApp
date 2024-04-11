@@ -30,11 +30,12 @@ public class CreateUserController {
      * @param createUserDTO DTO with details for creating User
      * @throws EmptyUserException if createUserDTO is empty or null
      * @throws InvalidEmailException if the email provided in createUserDTO is invalid
+     * @throws EmailExistsException if the email already exists
      * @throws UserNameExistsException if the username provided in createUserDTO already exists
      */
 
     @PostMapping
-    public ResponseEntity<UserResponseBody> create(@RequestBody CreateUserDTO createUserDTO) throws EmptyUserException, InvalidEmailException, UserNameExistsException {
+    public ResponseEntity<UserResponseBody> create(@RequestBody CreateUserDTO createUserDTO) throws EmptyUserException, InvalidEmailException, UserNameExistsException, EmailExistsException {
         if (createUserDTO == null) {
             UserResponseBody response = new UserResponseBody();
             response.addErrorMessage("Post body is empty.");

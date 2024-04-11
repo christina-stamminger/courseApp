@@ -2,13 +2,29 @@
 The CourseApp is a RESTful API for a course booking system, including user management, managing courses and bookings of users.
 
 # Description
-Written in Spring Boot users as well as courses can be created, get, updated and deleted.
-Users can book different courses and again cancel them.
-A course can only have a maximum number of users.
-An in-memory database (derby) is used for storing user data, course data and booking data in respectively a table.
+Built in Spring Boot, the CourseApp allows users to perform CRUD operations on users and courses. Users can also book and cancel bookings for different courses. Courses have a limit on the maximum number of users they can accommodate.
+An in-memory database (Apache derby) is used for storing user data, course data and booking data in respectively a table.
 They are mapped using a oneToMany relation (one user can book many courses, one course can have many users) and manyToOne relation (many bookings belong to one user or many bookings belong to one course).
 
 # Functionalities
+## User Management
+Users can be created by sending a POST request to the respective endpoint.
+Users can be retrieved by id or all by sending a GET request to the respective endpoint.
+Users can be updated by sending a PUT request to the respective endpoint.
+Users can also be deleted by sending a DELETE request to the respective endpoint.
+
+## Course Management
+Courses can be created by sending a POST request to the respective endpoint (see table).
+Courses can be retrieved by id or all by sending a GET request to the respective endpoint.
+Courses can be updated by sending a PUT request to the respective endpoint.
+Only available courses (free user places) can be retrieved by sending a GET to the respective endpoint.
+Courses can also be deleted by sending a DELETE request to the respective endpoint.
+
+## Booking Management
+Bookings can be created by sending a POST request to the respective endpoint.
+Bookings can be retrieved by id or all be sending a GET request to the respective endpoint.
+Bookings can be deleted by sending a DELETE request to the respective endpoint.
+(see table for all endpoints)
 
 # Installation /Dependencies
 - Spring Boot Starter Web

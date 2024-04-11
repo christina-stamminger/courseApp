@@ -42,13 +42,13 @@ public class BookingController {
      * Processes a booking request for a user for a course.
      *
      * @param bookingDTO An object containing the data required for the booking operation,
-     *                   including the user and course details.
+     * including the user and course details.
      * @return A {@link ResponseEntity} containing the newly created booking if successful,
-     *         or an appropriate error response if the booking could not be processed.
-     *         Returns {@link HttpStatus#BAD_REQUEST} if the user has already booked the course,
-     *         if the course is fully booked, or if the booking already exists.
-     *         Returns {@link HttpStatus#CONFLICT} if the booking with the provided ID already exists.
-     *         Returns {@link HttpStatus#INTERNAL_SERVER_ERROR} if an unexpected error occurs during processing.
+     * or an appropriate error response if the booking could not be processed.
+     * Returns {@link HttpStatus#BAD_REQUEST} if the user has already booked the course,
+     * if the course is fully booked, or if the booking already exists.
+     * Returns {@link HttpStatus#CONFLICT} if the booking with the provided ID already exists.
+     * Returns {@link HttpStatus#INTERNAL_SERVER_ERROR} if an unexpected error occurs during processing.
      */
     @PostMapping
     public ResponseEntity<?> book(@RequestBody BookingDTO bookingDTO) {
